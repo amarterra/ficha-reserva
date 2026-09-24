@@ -84,16 +84,35 @@
         overflow: visible !important;
       }
 
-      .no-print, header {
-        display: none !important;
-      }
-
-      main, main > div, .lg\:col-span-7, .lg\:col-span-5 {
+      main {
         width: 100% !important;
         max-width: 100% !important;
         padding: 0 !important;
         margin: 0 !important;
         display: block !important;
+      }
+
+      .lg\:col-span-7 {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: block !important;
+      }
+
+      /* Ocultar rigorosamente o painel de edição, cabeçalho e avisos */
+      .no-print, 
+      header, 
+      .lg\:col-span-5, 
+      #reservationForm,
+      [class*="no-print"] {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
       }
 
       .print-page {
