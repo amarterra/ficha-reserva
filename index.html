@@ -92,27 +92,37 @@
         display: block !important;
       }
 
+      /* Blindagem total contra a impressão do painel esquerdo, cabeçalho e avisos */
+      header,
+      #leftFormCol,
+      #reservationForm,
+      .no-print,
+      .print\:hidden,
+      .lg\:col-span-5,
+      [class*="no-print"],
+      [class*="print:hidden"] {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        width: 0 !important;
+        min-height: 0 !important;
+        max-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        position: absolute !important;
+        left: -999999px !important;
+        top: -999999px !important;
+        overflow: hidden !important;
+      }
+
+      #rightPrintCol,
       .lg\:col-span-7 {
         width: 100% !important;
         max-width: 100% !important;
         padding: 0 !important;
         margin: 0 !important;
         display: block !important;
-      }
-
-      /* Ocultar rigorosamente o painel de edição, cabeçalho e avisos */
-      .no-print, 
-      header, 
-      .lg\:col-span-5, 
-      #reservationForm,
-      [class*="no-print"] {
-        display: none !important;
-        visibility: hidden !important;
-        height: 0 !important;
-        width: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        overflow: hidden !important;
       }
 
       .print-page {
@@ -168,7 +178,7 @@
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col">
 
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm no-print">
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm no-print print:hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center space-x-3">
         <div class="h-9 w-9 bg-brand-red text-white flex items-center justify-center font-bold rounded-lg shadow-sm">
@@ -201,7 +211,7 @@
   <main class="max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-6 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6">
 
     <!-- COLUNA ESQUERDA: Formulário -->
-    <div class="lg:col-span-5 no-print">
+    <div id="leftFormCol" class="lg:col-span-5 no-print print:hidden">
       <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden sticky top-20">
         <div class="px-5 py-4 border-b border-slate-100 bg-slate-50/60 flex items-center justify-between">
           <h2 class="font-semibold text-slate-800 text-sm tracking-wide uppercase flex items-center gap-2">
@@ -410,10 +420,10 @@
     </div>
 
     <!-- COLUNA DIREITA: Folha A4 para Impressão -->
-    <div class="lg:col-span-7 flex flex-col items-center">
+    <div id="rightPrintCol" class="lg:col-span-7 flex flex-col items-center">
       
       <!-- Aviso visual -->
-      <div class="w-full max-w-[210mm] mb-2 flex items-center justify-between text-xs text-slate-500 px-1 no-print">
+      <div class="w-full max-w-[210mm] mb-2 flex items-center justify-between text-xs text-slate-500 px-1 no-print print:hidden">
         <span class="flex items-center gap-1.5">
           <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
           Folha A4 Pronta a Imprimir (1 Página)
@@ -768,186 +778,21 @@
 
       initLogoDragAndDrop();
 
-      const today = new Date().toISOString().split('T')[0];
-      
-      const resDateEl = document.getElementById('reservationDate');
-      if (resDateEl && !resDateEl.value) resDateEl.value = today;
+      // Blindagem via eventos do browser para suprimir a coluna esquerda antes da impressão
+      window.addEventListener('beforeprint', () => {
+        const leftCol = document.getElementById('leftFormCol');
+        if (leftCol) leftCol.style.setProperty('display', 'none', 'important');
+        const header = document.querySelector('header');
+        if (header) header.style.setProperty('display', 'none', 'important');
+      });
 
-      const cmiDateEl = document.getElementById('cmiDate');
-      if (cmiDateEl && !cmiDateEl.value) cmiDateEl.value = today;
+      window.addEventListener('afterprint', () => {
+        const leftCol = document.getElementById('leftFormCol');
+        if (leftCol) leftCol.style.removeProperty('display');
+        const header = document.querySelector('header');
+        if (header) header.style.removeProperty('display');
+      });
 
-      const cpcvLimit = new Date();
-      cpcvLimit.setDate(cpcvLimit.getDate() + 30);
-      const cpcvDateEl = document.getElementById('cpcvDateLimit');
-      if (cpcvDateEl && !cpcvDateEl.value) cpcvDateEl.value = cpcvLimit.toISOString().split('T')[0];
-
-      updateDocumentPreview();
-    });
-
-    function togglePaymentInputs() {
-      const method = document.getElementById('paymentMethod').value;
-      const refLabel = document.getElementById('paymentRefLabel');
-      
-      if (method === 'cheque') {
-        refLabel.textContent = 'N.º do Cheque';
-      } else if (method === 'transfer') {
-        refLabel.textContent = 'N.º Comprovativo / IBAN';
-      } else {
-        refLabel.textContent = 'Identificação / Referência';
-      }
-      updateDocumentPreview();
-    }
-
-    function syncPurchaseText() {
-      const input = document.getElementById('purchaseValueNum');
-      const num = parseFloat(input.value);
-      if (!isNaN(num) && num > 0) {
-        const formattedNum = new Intl.NumberFormat('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(num) + ' €';
-        const extenso = numeroPorExtensoPt(num);
-        document.getElementById('purchaseValueText').value = `${formattedNum} (${extenso})`;
-
-        // Calcula e preenche automaticamente o sinal de 10%
-        const sinalCpcv = Math.round(num * 0.10 * 100) / 100;
-        document.getElementById('cpcvSignalNum').value = sinalCpcv;
-        syncCpcvSignalText();
-      } else if (!input.value) {
-        document.getElementById('purchaseValueText').value = '';
-        document.getElementById('cpcvSignalNum').value = '';
-        document.getElementById('cpcvSignalText').value = '';
-      }
-      updateDocumentPreview();
-    }
-
-    function syncCpcvSignalText() {
-      const input = document.getElementById('cpcvSignalNum');
-      const num = parseFloat(input.value);
-      if (!isNaN(num) && num > 0) {
-        const formattedNum = new Intl.NumberFormat('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(num) + ' €';
-        const extenso = numeroPorExtensoPt(num);
-        document.getElementById('cpcvSignalText').value = `${formattedNum} (${extenso})`;
-      } else if (!input.value) {
-        document.getElementById('cpcvSignalText').value = '';
-      }
-      updateDocumentPreview();
-    }
-
-    function syncReserveText() {
-      const input = document.getElementById('reserveValueNum');
-      const num = parseFloat(input.value);
-      if (!isNaN(num) && num > 0) {
-        const formattedNum = new Intl.NumberFormat('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(num) + '€';
-        const extenso = numeroPorExtensoPt(num);
-        document.getElementById('reserveValueExtenso').value = `${formattedNum} (${extenso})`;
-      } else if (!input.value) {
-        document.getElementById('reserveValueExtenso').value = '';
-      }
-      updateDocumentPreview();
-    }
-
-    function handleChequeUpload(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const img = document.getElementById('chequeImagePreview');
-          const placeholder = document.getElementById('chequePlaceholder');
-          img.src = e.target.result;
-          img.classList.remove('hidden');
-          placeholder.classList.add('hidden');
-        };
-        reader.readAsDataURL(file);
-      }
-    }
-
-    function updateDocumentPreview() {
-      const cmiDate = formatDatePt(document.getElementById('cmiDate').value);
-      document.getElementById('docCmiDate').textContent = cmiDate;
-
-      const resDateRaw = document.getElementById('reservationDate').value;
-      const resDate = formatDatePt(resDateRaw);
-      document.getElementById('docHeaderDate').textContent = resDate;
-
-      const propFractionInput = (document.getElementById('propFraction').value || '').trim();
-      const fractionNorm = propFractionInput.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-      const fractionClauseEl = document.getElementById('docFractionClause');
-      
-      if (!propFractionInput || fractionNorm === 'nao aplicavel' || fractionNorm === 'n/a' || fractionNorm === 'na') {
-        fractionClauseEl.innerHTML = 'como reserva do';
-      } else {
-        fractionClauseEl.innerHTML = `como reserva da fração <strong class="text-[#2d2d2d] font-semibold">${propFractionInput}</strong> do`;
-      }
-
-      document.getElementById('docPropArticleType').textContent = document.getElementById('propArticleType').value || 'urbano';
-      document.getElementById('docPropArticleNum').textContent = document.getElementById('propArticleNum').value || '___';
-      document.getElementById('docPropAddress').textContent = document.getElementById('propAddress').value || '_________________________________';
-      document.getElementById('docPropParish').textContent = document.getElementById('propParish').value || '_____________________';
-      document.getElementById('docPropCouncil').textContent = document.getElementById('propCouncil').value || '__________________';
-
-      // Atualização dos intervenientes no documento
-      const buyerName = (document.getElementById('buyerNames').value || '').trim();
-      const buyerNif = (document.getElementById('buyerNifs').value || '').trim();
-      let buyerDisplay = '';
-      if (buyerName && buyerNif) {
-        buyerDisplay = `${buyerName} (NIF: ${buyerNif})`;
-      } else if (buyerName) {
-        buyerDisplay = buyerName;
-      } else if (buyerNif) {
-        buyerDisplay = `(NIF: ${buyerNif})`;
-      } else {
-        buyerDisplay = '__________________________________________';
-      }
-      document.getElementById('docBuyerNames').textContent = buyerDisplay;
-
-      const sellerName = (document.getElementById('sellerNames').value || '').trim();
-      const sellerNif = (document.getElementById('sellerNifs').value || '').trim();
-      let sellerDisplay = '';
-      if (sellerName && sellerNif) {
-        sellerDisplay = `${sellerName} (NIF: ${sellerNif})`;
-      } else if (sellerName) {
-        sellerDisplay = sellerName;
-      } else if (sellerNif) {
-        sellerDisplay = `(NIF: ${sellerNif})`;
-      } else {
-        sellerDisplay = '____________________________________________________________________________';
-      }
-      document.getElementById('docSellerNames').textContent = sellerDisplay;
-
-      const method = document.getElementById('paymentMethod').value;
-      if (method === 'cheque') {
-        document.getElementById('docPaymentMethod').textContent = 'um cheque com o N.º';
-      } else if (method === 'transfer') {
-        document.getElementById('docPaymentMethod').textContent = 'transferência bancária com a ref./IBAN';
-      } else {
-        document.getElementById('docPaymentMethod').textContent = 'documento/meio com o N.º';
-      }
-
-      document.getElementById('docReserveValue').textContent = document.getElementById('reserveValueExtenso').value || '___,___ €';
-      document.getElementById('docChequeNumber').textContent = document.getElementById('chequeNumber').value || '________________';
-      document.getElementById('docChequeBank').textContent = document.getElementById('chequeBank').value || '____________________________';
-      document.getElementById('docPurchaseValue').textContent = document.getElementById('purchaseValueText').value || 'EUR _________________________________________________________________________';
-
-      document.getElementById('docCpcvDate').textContent = formatDatePt(document.getElementById('cpcvDateLimit').value);
-      document.getElementById('docCpcvSignal').textContent = document.getElementById('cpcvSignalText').value || '___________________________';
-      document.getElementById('docDeedDays').textContent = document.getElementById('deedDaysLimit').value || '____';
-
-      const hasFinancing = document.getElementById('hasFinancing').checked;
-      const clausula1 = document.getElementById('clausula1');
-      const clausula4 = document.getElementById('clausula4');
-
-      if (hasFinancing) {
-        clausula1.innerHTML = '<strong>1.ª</strong> Este cheque serve de pré-sinal do preço da compra do imóvel acima identificado, só sendo descontado após a assinatura do Contrato Promessa de Compra e Venda (CPCV) ou da escritura, caso não haja lugar a CPCV, e a sua entrega justifica-se pelo facto de o comprador pretender recorrer a financiamento bancário para a aquisição, não tendo, nesta data, garantida a obtenção desse financiamento.';
-        clausula4.innerHTML = '<strong>4.ª</strong> Se a entidade bancária fizer empréstimo insuficiente para a efetivação desta compra ou o potencial Promitente Comprador não conseguir o financiamento, este cheque é devolvido e anulado este processo, salvo se as partes estiverem de acordo em prosseguir de igual modo com o processo de compra e venda.';
-        clausula4.style.display = 'block';
-      } else {
-        clausula1.innerHTML = '<strong>1.ª</strong> Este cheque serve de pré-sinal do preço da compra do imóvel acima identificado, só sendo descontado após a assinatura do Contrato Promessa de Compra e Venda ou da escritura, caso não haja lugar a CPCV, declarando o comprador que a aquisição é efetuada através de capitais próprios, sem recurso a crédito à habitação.';
-        clausula4.innerHTML = '<strong>4.ª</strong> As partes acordam expressamente que a transação não está dependente de financiamento bancário.';
-      }
-
-      const council = document.getElementById('propCouncil').value || 'Amares';
-      document.getElementById('docFooterCityDate').textContent = `${council}, ${resDate}`;
-    }
-
-    function loadSampleData() {
       const today = new Date().toISOString().split('T')[0];
       document.getElementById('reservationDate').value = today;
       document.getElementById('cmiDate').value = today;
