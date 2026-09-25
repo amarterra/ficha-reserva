@@ -64,7 +64,7 @@
     @media print {
       @page {
         size: A4 portrait;
-        margin: 10mm;
+        margin: 10mm 15px 10mm 15px;
       }
 
       *, *::before, *::after {
@@ -73,7 +73,7 @@
 
       html, body {
         background: #ffffff !important;
-        color: #2d2d2d !important;
+        color: #374151 !important;
         font-size: 10px !important;
         font-family: 'Gotham', 'Gotham Book', 'Montserrat', sans-serif !important;
         margin: 0 !important;
@@ -133,7 +133,7 @@
         display: flex !important;
         flex-direction: column !important;
         justify-content: space-between !important;
-        color: #2d2d2d !important;
+        color: #374151 !important;
         page-break-inside: avoid !important;
         break-inside: avoid !important;
         page-break-before: avoid !important;
@@ -160,19 +160,26 @@
         font-size: 10px !important;
         line-height: 1.35 !important;
         margin-bottom: 6px !important;
+        color: #374151 !important;
       }
       .print-page .intro-paragraph .purchase-val-box {
-        font-size: 10px !important;
+        font-size: 12px !important;
+        color: #374151 !important;
+      }
+      .print-page .intro-paragraph .purchase-val-box strong {
+        font-size: 12px !important;
       }
       .print-page .clauses-block {
         font-size: 10px !important;
         line-height: 1.25 !important;
+        color: #374151 !important;
       }
       .print-page .clauses-block p {
         margin-bottom: 2px !important;
+        color: #374151 !important;
       }
       .print-page .signature-space {
-        margin-bottom: 28px !important;
+        margin-bottom: 10mm !important;
       }
       .print-page .signature-section-block {
         margin-top: 4px !important;
@@ -455,7 +462,7 @@
       </div>
 
       <!-- Contentor da Folha A4 -->
-      <div id="printSheet" class="print-page bg-white shadow-xl rounded-xl border border-slate-200 w-full max-w-[210mm] min-h-[297mm] p-5 sm:p-7 text-[#2d2d2d] flex flex-col justify-between transition-all font-sans text-[10px] leading-relaxed relative">
+      <div id="printSheet" class="print-page bg-white shadow-xl rounded-xl border border-slate-200 w-full max-w-[210mm] min-h-[297mm] pt-5 pb-5 px-[15px] sm:px-[15px] text-[#374151] flex flex-col justify-between transition-all font-sans text-[10px] leading-relaxed relative">
         
         <!-- PARTE SUPERIOR E CORPO DO DOCUMENTO -->
         <div>
@@ -500,7 +507,7 @@
             <div class="flex justify-end mt-1">
               <div class="border border-[#c8102e] rounded px-3 py-0.5 text-right bg-white min-w-[125px] shadow-xs">
                 <span class="block text-[7.5px] font-bold text-[#c8102e] uppercase tracking-wider">DATA DA RESERVA</span>
-                <span id="docHeaderDate" class="font-bold text-[#2d2d2d] text-xs tracking-normal">--/--/----</span>
+                <span id="docHeaderDate" class="font-bold text-[#374151] text-xs tracking-normal">--/--/----</span>
               </div>
             </div>
           </div>
@@ -511,23 +518,23 @@
               <svg class="w-9 h-9 mb-2 stroke-1 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
               </svg>
-              <span class="font-bold text-[11px] text-[#2d2d2d] uppercase tracking-wide">CÓPIA DO CHEQUE / COMPROVATIVO DE PAGAMENTO</span>
-              <span class="text-[9px] text-[#2d2d2d]/80 italic mt-0.5">Este cheque é traçado e passado em nome do proprietário do imóvel</span>
+              <span class="font-bold text-[11px] text-[#374151] uppercase tracking-wide">CÓPIA DO CHEQUE / COMPROVATIVO DE PAGAMENTO</span>
+              <span class="text-[9px] text-[#374151]/80 italic mt-0.5">Este cheque é traçado e passado em nome do proprietário do imóvel</span>
               <span class="text-[8px] text-slate-400 mt-1 no-print">(Pode carregar o ficheiro no formulário à esquerda)</span>
             </div>
             <img id="chequeImagePreview" src="" alt="Cópia do Cheque" class="hidden max-h-[270px] object-contain rounded shadow-sm">
           </div>
 
           <!-- Parágrafo de Identificação e Declaração -->
-          <div class="intro-paragraph text-justify leading-relaxed mb-2 text-[10px] text-[#2d2d2d] pb-0.5">
-            <span class="font-bold text-[#2d2d2d]">Amarterra - Mediação Imobiliária, Lda.</span>, com sede na <span class="font-medium text-[#2d2d2d]">Praça do Comércio, n.º 108, 4720-337 Ferreiros AMR</span>, titular da licença <span class="font-bold text-[#2d2d2d]">AMI 14229</span>, vem, para os devidos efeitos declarar que, como fiel depositário, recebeu de <strong id="docBuyerNames" class="text-[#2d2d2d] font-semibold underline decoration-[#2d2d2d]/40">__________________________________________</strong>, o valor de <strong id="docReserveValue" class="text-[#2d2d2d] font-semibold">2.500,00€ (Dois mil e quinhentos euros)</strong> mediante a entrega de <span id="docPaymentMethod">um cheque com o N.º</span> <strong id="docChequeNumber" class="text-[#2d2d2d] font-semibold">________________</strong>, sacado sobre o <strong id="docChequeBank" class="text-[#2d2d2d] font-semibold">____________________________</strong>, <span id="docFractionClause">como reserva do</span> artigo matricial <span id="docPropArticleType" class="font-semibold text-[#2d2d2d]">urbano</span> n.º <strong id="docPropArticleNum" class="text-[#2d2d2d] font-semibold">195</strong>, sito na <strong id="docPropAddress" class="text-[#2d2d2d] font-semibold">_________________________________</strong>, freguesia de <strong id="docPropParish" class="text-[#2d2d2d] font-semibold">_____________________</strong>, concelho de <strong id="docPropCouncil" class="text-[#2d2d2d] font-semibold">__________________</strong> de que é/são proprietário(s) <strong id="docSellerNames" class="text-[#2d2d2d] font-semibold underline decoration-[#2d2d2d]/40">____________________________________________________________________________</strong>.
-            <div class="purchase-val-box mt-1 p-1 bg-slate-50 rounded border border-[#2d2d2d]/20 text-[10px]">
-              O valor acordado para a compra e venda é de: <strong id="docPurchaseValue" class="text-[#2d2d2d] font-bold text-[10px]">EUR _________________________________________________________________________</strong>.
+          <div class="intro-paragraph text-justify leading-relaxed mb-2 text-[10px] text-[#374151] pb-0.5">
+            <span class="font-bold text-[#374151]">Amarterra - Mediação Imobiliária, Lda.</span>, com sede na <span class="font-medium text-[#374151]">Praça do Comércio, n.º 108, 4720-337 Ferreiros AMR</span>, titular da licença <span class="font-bold text-[#374151]">AMI 14229</span>, vem, para os devidos efeitos declarar que, como fiel depositário, recebeu de <strong id="docBuyerNames" class="text-[#374151] font-semibold underline decoration-[#374151]/40">__________________________________________</strong>, o valor de <strong id="docReserveValue" class="text-[#374151] font-semibold">2.500,00€ (Dois mil e quinhentos euros)</strong> mediante a entrega de <span id="docPaymentMethod">um cheque com o N.º</span> <strong id="docChequeNumber" class="text-[#374151] font-semibold">________________</strong>, sacado sobre o <strong id="docChequeBank" class="text-[#374151] font-semibold">____________________________</strong>, <span id="docFractionClause">como reserva do</span> artigo matricial <span id="docPropArticleType" class="font-semibold text-[#374151]">urbano</span> n.º <strong id="docPropArticleNum" class="text-[#374151] font-semibold">195</strong>, sito na <strong id="docPropAddress" class="text-[#374151] font-semibold">_________________________________</strong>, freguesia de <strong id="docPropParish" class="text-[#374151] font-semibold">_____________________</strong>, concelho de <strong id="docPropCouncil" class="text-[#374151] font-semibold">__________________</strong> de que é/são proprietário(s) <strong id="docSellerNames" class="text-[#374151] font-semibold underline decoration-[#374151]/40">____________________________________________________________________________</strong>.
+            <div class="purchase-val-box mt-1 p-1.5 bg-slate-50 rounded border border-[#374151]/20 text-[12px] text-[#374151]">
+              O valor acordado para a compra e venda é de: <strong id="docPurchaseValue" class="text-[#374151] font-bold text-[12px]">EUR _________________________________________________________________________</strong>.
             </div>
           </div>
 
           <!-- Cláusulas Contratuais (1.ª a 13.ª) -->
-          <div class="clauses-block space-y-1 text-justify text-[10px] text-[#2d2d2d] leading-tight">
+          <div class="clauses-block space-y-1 text-justify text-[10px] text-[#374151] leading-tight">
             
             <p id="clausula1">
               <strong>1.ª</strong> Este cheque serve de pré-sinal do preço da compra do imóvel acima identificado, só sendo descontado após a assinatura do Contrato Promessa de Compra e Venda (CPCV) ou da escritura, caso não haja lugar a CPCV, e a sua entrega justifica-se pelo facto de o comprador pretender recorrer a financiamento bancário para a aquisição, não tendo, nesta data, garantida a obtenção desse financiamento.
@@ -577,7 +584,7 @@
               <strong>12.ª</strong> A mediadora supra identificada declara que o imóvel objeto da presente ficha de reserva, foi por si angariado através do Contrato de Mediação Imobiliária (CMI) celebrado em <strong id="docCmiDate">___/___/________</strong>.
             </p>
 
-            <p class="text-[10px] text-[#2d2d2d]">
+            <p class="text-[10px] text-[#374151]">
               <strong>13.ª</strong> O Proprietário e o Potencial Comprador poderão autorizar no sítio privacidade.era.pt que os seus dados sejam recolhidos, transmitidos ou processados informaticamente pela mediadora. Estes dados destinam-se a processamento administrativo, estatístico e de apresentação / divulgação de produtos e serviços comercializados.
             </p>
 
@@ -587,24 +594,24 @@
           <div class="mt-3 pt-1 signature-section-block">
             <div class="grid grid-cols-3 gap-3 text-center text-[9px]">
               <div>
-                <p class="font-bold text-[#2d2d2d] mb-[34px] signature-space uppercase tracking-wide">O(s) Promitente(s) Vendedor(es)</p>
-                <div class="border-b border-[#2d2d2d] w-4/5 mx-auto"></div>
-                <p class="text-[8px] text-[#2d2d2d]/80 mt-1">Assinatura</p>
+                <p class="font-bold text-[#374151] mb-[10mm] signature-space uppercase tracking-wide">O(s) Promitente(s) Vendedor(es)</p>
+                <div class="border-b border-[#374151] w-4/5 mx-auto"></div>
+                <p class="text-[8px] text-[#374151]/80 mt-1">Assinatura</p>
               </div>
               <div>
-                <p class="font-bold text-[#2d2d2d] mb-[34px] signature-space uppercase tracking-wide">A Mediadora (Fiel Depositário)</p>
-                <div class="border-b border-[#2d2d2d] w-4/5 mx-auto"></div>
-                <p class="text-[8px] text-[#2d2d2d]/80 mt-1">Assinatura e Carimbo</p>
+                <p class="font-bold text-[#374151] mb-[10mm] signature-space uppercase tracking-wide">A Mediadora (Fiel Depositário)</p>
+                <div class="border-b border-[#374151] w-4/5 mx-auto"></div>
+                <p class="text-[8px] text-[#374151]/80 mt-1">Assinatura e Carimbo</p>
               </div>
               <div>
-                <p class="font-bold text-[#2d2d2d] mb-[34px] signature-space uppercase tracking-wide">O(s) Promitente(s) Comprador(es)</p>
-                <div class="border-b border-[#2d2d2d] w-4/5 mx-auto"></div>
-                <p class="text-[8px] text-[#2d2d2d]/80 mt-1">Assinatura</p>
+                <p class="font-bold text-[#374151] mb-[10mm] signature-space uppercase tracking-wide">O(s) Promitente(s) Comprador(es)</p>
+                <div class="border-b border-[#374151] w-4/5 mx-auto"></div>
+                <p class="text-[8px] text-[#374151]/80 mt-1">Assinatura</p>
               </div>
             </div>
 
             <!-- Linha das Vias e Data -->
-            <div class="flex items-center justify-between mt-1.5 text-[8px] text-[#2d2d2d]/80 italic">
+            <div class="flex items-center justify-between mt-1.5 text-[8px] text-[#374151]/80 italic">
               <span>Feito em triplicado com cópia do cheque e entregue uma via a cada um dos outorgantes.</span>
               <span id="docFooterCityDate">Amares, 2026</span>
             </div>
@@ -614,7 +621,7 @@
         <!-- RODAPÉ FIXO NO LIMITE INFERIOR DA PÁGINA A4 -->
         <div class="mt-auto pt-2 flex flex-col items-start justify-start text-left footer-legal-block">
           <div class="w-16 h-[1.5px] bg-[#c8102e] mb-0.5"></div>
-          <p class="text-[7.2px] font-semibold text-[#2d2d2d] tracking-wider uppercase text-left">
+          <p class="text-[7.2px] font-semibold text-[#374151] tracking-wider uppercase text-left">
             CADA AGÊNCIA É JURÍDICA E FINANCEIRAMENTE INDEPENDENTE
           </p>
         </div>
