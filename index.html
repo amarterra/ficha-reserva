@@ -127,11 +127,12 @@
         margin: 0 !important;
         width: 100% !important;
         max-width: 100% !important;
-        min-height: auto !important;
-        height: auto !important;
+        height: 286mm !important;
+        min-height: 286mm !important;
+        max-height: 286mm !important;
         display: flex !important;
         flex-direction: column !important;
-        justify-content: flex-start !important;
+        justify-content: space-between !important;
         color: #2d2d2d !important;
         page-break-inside: avoid !important;
         break-inside: avoid !important;
@@ -139,33 +140,33 @@
         break-before: avoid !important;
         page-break-after: avoid !important;
         break-after: avoid !important;
-        overflow: visible !important;
+        overflow: hidden !important;
       }
 
       .print-page #headerFlexContainer {
         height: 96px !important;
       }
       .print-page #chequeContainer {
-        height: 245px !important;
-        min-height: 245px !important;
-        max-height: 245px !important;
+        height: 280px !important;
+        min-height: 280px !important;
+        max-height: 280px !important;
         margin-bottom: 6px !important;
         padding: 4px !important;
       }
       .print-page #chequeImagePreview {
-        max-height: 236px !important;
+        max-height: 270px !important;
       }
       .print-page .intro-paragraph {
-        font-size: 8.8px !important;
-        line-height: 1.25 !important;
+        font-size: 9.3px !important;
+        line-height: 1.32 !important;
         margin-bottom: 6px !important;
       }
       .print-page .clauses-block {
-        font-size: 8.2px !important;
-        line-height: 1.18 !important;
+        font-size: 8.6px !important;
+        line-height: 1.24 !important;
       }
       .print-page .clauses-block p {
-        margin-bottom: 2px !important;
+        margin-bottom: 2.5px !important;
       }
       .print-page .signature-space {
         margin-bottom: 34px !important;
@@ -175,8 +176,9 @@
         padding-top: 2px !important;
       }
       .print-page .footer-legal-block {
-        margin-top: 8px !important;
-        padding-top: 0 !important;
+        margin-top: auto !important;
+        padding-top: 4px !important;
+        padding-bottom: 0 !important;
         page-break-before: avoid !important;
         break-before: avoid !important;
       }
@@ -500,8 +502,8 @@
             </div>
           </div>
 
-          <!-- Caixa do Cheque / Comprovativo (+50% de espaço) -->
-          <div class="mb-2 border-2 border-dashed border-slate-300 rounded-lg p-2 bg-slate-50/50 flex flex-col items-center justify-center relative h-[245px] min-h-[245px] overflow-hidden text-center" id="chequeContainer">
+          <!-- Caixa do Cheque / Comprovativo (280px) -->
+          <div class="mb-2 border-2 border-dashed border-slate-300 rounded-lg p-2 bg-slate-50/50 flex flex-col items-center justify-center relative h-[280px] min-h-[280px] overflow-hidden text-center" id="chequeContainer">
             <div id="chequePlaceholder" class="p-2 flex flex-col items-center justify-center text-slate-500">
               <svg class="w-9 h-9 mb-2 stroke-1 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
@@ -510,11 +512,11 @@
               <span class="text-[9px] text-[#2d2d2d]/80 italic mt-0.5">Este cheque é traçado e passado em nome do proprietário do imóvel</span>
               <span class="text-[8px] text-slate-400 mt-1 no-print">(Pode carregar o ficheiro no formulário à esquerda)</span>
             </div>
-            <img id="chequeImagePreview" src="" alt="Cópia do Cheque" class="hidden max-h-[238px] object-contain rounded shadow-sm">
+            <img id="chequeImagePreview" src="" alt="Cópia do Cheque" class="hidden max-h-[270px] object-contain rounded shadow-sm">
           </div>
 
           <!-- Parágrafo de Identificação e Declaração -->
-          <div class="intro-paragraph text-justify leading-relaxed mb-2 text-[9.2px] text-[#2d2d2d] pb-0.5">
+          <div class="intro-paragraph text-justify leading-relaxed mb-2 text-[9.3px] text-[#2d2d2d] pb-0.5">
             <span class="font-bold text-[#2d2d2d]">Amarterra - Mediação Imobiliária, Lda.</span>, com sede na <span class="font-medium text-[#2d2d2d]">Praça do Comércio, n.º 108, 4720-337 Ferreiros AMR</span>, titular da licença <span class="font-bold text-[#2d2d2d]">AMI 14229</span>, vem, para os devidos efeitos declarar que, como fiel depositário, recebeu de <strong id="docBuyerNames" class="text-[#2d2d2d] font-semibold underline decoration-[#2d2d2d]/40">__________________________________________</strong>, o valor de <strong id="docReserveValue" class="text-[#2d2d2d] font-semibold">2.500,00€ (Dois mil e quinhentos euros)</strong> mediante a entrega de <span id="docPaymentMethod">um cheque com o N.º</span> <strong id="docChequeNumber" class="text-[#2d2d2d] font-semibold">________________</strong>, sacado sobre o <strong id="docChequeBank" class="text-[#2d2d2d] font-semibold">____________________________</strong>, <span id="docFractionClause">como reserva do</span> artigo matricial <span id="docPropArticleType" class="font-semibold text-[#2d2d2d]">urbano</span> n.º <strong id="docPropArticleNum" class="text-[#2d2d2d] font-semibold">195</strong>, sito na <strong id="docPropAddress" class="text-[#2d2d2d] font-semibold">_________________________________</strong>, freguesia de <strong id="docPropParish" class="text-[#2d2d2d] font-semibold">_____________________</strong>, concelho de <strong id="docPropCouncil" class="text-[#2d2d2d] font-semibold">__________________</strong> de que é/são proprietário(s) <strong id="docSellerNames" class="text-[#2d2d2d] font-semibold underline decoration-[#2d2d2d]/40">____________________________________________________________________________</strong>.
             <div class="mt-1 p-1 bg-slate-50 rounded border border-[#2d2d2d]/20 text-[9.2px]">
               O valor acordado para a compra e venda é de: <strong id="docPurchaseValue" class="text-[#2d2d2d] font-bold text-[9.5px]">EUR _________________________________________________________________________</strong>.
@@ -522,7 +524,7 @@
           </div>
 
           <!-- Cláusulas Contratuais (1.ª a 13.ª) -->
-          <div class="clauses-block space-y-1 text-justify text-[8.6px] text-[#2d2d2d] leading-[1.22]">
+          <div class="clauses-block space-y-1 text-justify text-[8.6px] text-[#2d2d2d] leading-tight">
             
             <p id="clausula1">
               <strong>1.ª</strong> Este cheque serve de pré-sinal do preço da compra do imóvel acima identificado, só sendo descontado após a assinatura do Contrato Promessa de Compra e Venda (CPCV) ou da escritura, caso não haja lugar a CPCV, e a sua entrega justifica-se pelo facto de o comprador pretender recorrer a financiamento bancário para a aquisição, não tendo, nesta data, garantida a obtenção desse financiamento.
@@ -607,7 +609,7 @@
         </div>
 
         <!-- RODAPÉ FIXO NO LIMITE INFERIOR DA PÁGINA A4 -->
-        <div class="mt-2 pt-1 flex flex-col items-start justify-start text-left footer-legal-block">
+        <div class="mt-auto pt-2 flex flex-col items-start justify-start text-left footer-legal-block">
           <div class="w-16 h-[1.5px] bg-[#c8102e] mb-0.5"></div>
           <p class="text-[7.2px] font-semibold text-[#2d2d2d] tracking-wider uppercase text-left">
             CADA AGÊNCIA É JURÍDICA E FINANCEIRAMENTE INDEPENDENTE
