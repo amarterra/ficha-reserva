@@ -64,7 +64,7 @@
     @media print {
       @page {
         size: A4 portrait;
-        margin: 5mm 8mm 5mm 8mm;
+        margin: 5mm 8mm 4mm 8mm;
       }
 
       *, *::before, *::after {
@@ -79,9 +79,9 @@
         margin: 0 !important;
         padding: 0 !important;
         width: 100% !important;
-        height: auto !important;
+        height: 100% !important;
         display: block !important;
-        overflow: visible !important;
+        overflow: hidden !important;
       }
 
       /* OCULTAÇÃO ABSOLUTA DE TODO O FORMULÁRIO, CABEÇALHOS E BOTÕES */
@@ -127,7 +127,8 @@
         margin: 0 !important;
         width: 100% !important;
         max-width: 100% !important;
-        height: auto !important;
+        height: 287mm !important;
+        max-height: 287mm !important;
         display: flex !important;
         flex-direction: column !important;
         justify-content: space-between !important;
@@ -138,22 +139,33 @@
         break-before: avoid !important;
         page-break-after: avoid !important;
         break-after: avoid !important;
+        overflow: hidden !important;
       }
 
       .print-page #headerFlexContainer {
-        height: 112px !important;
+        height: 110px !important;
       }
       .print-page #chequeContainer {
-        min-height: 118px !important;
+        height: 168px !important;
+        min-height: 168px !important;
+        max-height: 168px !important;
+        margin-bottom: 8px !important;
       }
       .print-page #chequeImagePreview {
-        max-height: 135px !important;
+        max-height: 160px !important;
       }
       .print-page .signature-space {
-        margin-bottom: 72px !important;
+        margin-bottom: 48px !important;
+      }
+      .print-page .signature-section-block {
+        margin-top: 8px !important;
+        padding-top: 2px !important;
       }
       .print-page .footer-legal-block {
-        margin-top: 14px !important;
+        margin-top: 6px !important;
+        padding-top: 0 !important;
+        page-break-before: avoid !important;
+        break-before: avoid !important;
       }
     }
     
@@ -476,16 +488,16 @@
           </div>
 
           <!-- Caixa do Cheque / Comprovativo -->
-          <div class="mb-2 border-2 border-dashed border-slate-300 rounded-lg p-2 bg-slate-50/50 flex flex-col items-center justify-center relative min-h-[143px] overflow-hidden text-center" id="chequeContainer">
+          <div class="mb-2 border-2 border-dashed border-slate-300 rounded-lg p-2 bg-slate-50/50 flex flex-col items-center justify-center relative min-h-[165px] overflow-hidden text-center" id="chequeContainer">
             <div id="chequePlaceholder" class="p-2 flex flex-col items-center justify-center text-slate-500">
-              <svg class="w-6 h-6 mb-1 stroke-1 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-7 h-7 mb-1.5 stroke-1 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
               </svg>
               <span class="font-bold text-[10px] text-[#2d2d2d] uppercase tracking-wide">CÓPIA DO CHEQUE / COMPROVATIVO DE PAGAMENTO</span>
-              <span class="text-[8.5px] text-[#2d2d2d]/80 italic">Este cheque é traçado e passado em nome do proprietário do imóvel</span>
-              <span class="text-[7.5px] text-slate-400 mt-0.5 no-print">(Pode carregar o ficheiro no formulário à esquerda)</span>
+              <span class="text-[8.5px] text-[#2d2d2d]/80 italic mt-0.5">Este cheque é traçado e passado em nome do proprietário do imóvel</span>
+              <span class="text-[7.5px] text-slate-400 mt-1 no-print">(Pode carregar o ficheiro no formulário à esquerda)</span>
             </div>
-            <img id="chequeImagePreview" src="" alt="Cópia do Cheque" class="hidden max-h-[170px] object-contain rounded shadow-sm">
+            <img id="chequeImagePreview" src="" alt="Cópia do Cheque" class="hidden max-h-[165px] object-contain rounded shadow-sm">
           </div>
 
           <!-- Parágrafo de Identificação e Declaração -->
@@ -554,27 +566,27 @@
           </div>
 
           <!-- Secção de Assinaturas -->
-          <div class="mt-7 pt-2">
+          <div class="mt-4 sm:mt-5 pt-1 signature-section-block">
             <div class="grid grid-cols-3 gap-3 text-center text-[9.3px]">
               <div>
-                <p class="font-bold text-[#2d2d2d] mb-[90px] signature-space uppercase tracking-wide">O(s) Promitente(s) Vendedor(es)</p>
+                <p class="font-bold text-[#2d2d2d] mb-[50px] signature-space uppercase tracking-wide">O(s) Promitente(s) Vendedor(es)</p>
                 <div class="border-b border-[#2d2d2d] w-4/5 mx-auto"></div>
                 <p class="text-[8px] text-[#2d2d2d]/80 mt-1">Assinatura</p>
               </div>
               <div>
-                <p class="font-bold text-[#2d2d2d] mb-[90px] signature-space uppercase tracking-wide">A Mediadora (Fiel Depositário)</p>
+                <p class="font-bold text-[#2d2d2d] mb-[50px] signature-space uppercase tracking-wide">A Mediadora (Fiel Depositário)</p>
                 <div class="border-b border-[#2d2d2d] w-4/5 mx-auto"></div>
                 <p class="text-[8px] text-[#2d2d2d]/80 mt-1">Assinatura e Carimbo</p>
               </div>
               <div>
-                <p class="font-bold text-[#2d2d2d] mb-[90px] signature-space uppercase tracking-wide">O(s) Promitente(s) Comprador(es)</p>
+                <p class="font-bold text-[#2d2d2d] mb-[50px] signature-space uppercase tracking-wide">O(s) Promitente(s) Comprador(es)</p>
                 <div class="border-b border-[#2d2d2d] w-4/5 mx-auto"></div>
                 <p class="text-[8px] text-[#2d2d2d]/80 mt-1">Assinatura</p>
               </div>
             </div>
 
             <!-- Linha das Vias e Data -->
-            <div class="flex items-center justify-between mt-2.5 text-[8px] text-[#2d2d2d]/80 italic">
+            <div class="flex items-center justify-between mt-2 text-[8px] text-[#2d2d2d]/80 italic">
               <span>Feito em triplicado com cópia do cheque e entregue uma via a cada um dos outorgantes.</span>
               <span id="docFooterCityDate">Amares, 2026</span>
             </div>
@@ -582,7 +594,7 @@
         </div>
 
         <!-- RODAPÉ FIXO NO LIMITE INFERIOR DA PÁGINA A4 -->
-        <div class="mt-auto pt-2 flex flex-col items-start justify-start text-left footer-legal-block">
+        <div class="mt-auto pt-1 flex flex-col items-start justify-start text-left footer-legal-block">
           <div class="w-16 h-[1.5px] bg-[#c8102e] mb-0.5"></div>
           <p class="text-[7.2px] font-semibold text-[#2d2d2d] tracking-wider uppercase text-left">
             CADA AGÊNCIA É JURÍDICA E FINANCEIRAMENTE INDEPENDENTE
