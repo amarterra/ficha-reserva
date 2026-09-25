@@ -64,7 +64,7 @@
     @media print {
       @page {
         size: A4 portrait;
-        margin: 5mm 8mm 4mm 8mm;
+        margin: 10mm;
       }
 
       *, *::before, *::after {
@@ -74,7 +74,7 @@
       html, body {
         background: #ffffff !important;
         color: #2d2d2d !important;
-        font-size: 8.5pt !important;
+        font-size: 10px !important;
         font-family: 'Gotham', 'Gotham Book', 'Montserrat', sans-serif !important;
         margin: 0 !important;
         padding: 0 !important;
@@ -127,9 +127,9 @@
         margin: 0 !important;
         width: 100% !important;
         max-width: 100% !important;
-        height: 286mm !important;
-        min-height: 286mm !important;
-        max-height: 286mm !important;
+        height: 277mm !important;
+        min-height: 277mm !important;
+        max-height: 277mm !important;
         display: flex !important;
         flex-direction: column !important;
         justify-content: space-between !important;
@@ -144,35 +144,38 @@
       }
 
       .print-page #headerFlexContainer {
-        height: 96px !important;
+        height: 94px !important;
       }
       .print-page #chequeContainer {
-        height: 280px !important;
-        min-height: 280px !important;
-        max-height: 280px !important;
+        height: 250px !important;
+        min-height: 250px !important;
+        max-height: 250px !important;
         margin-bottom: 6px !important;
         padding: 4px !important;
       }
       .print-page #chequeImagePreview {
-        max-height: 270px !important;
+        max-height: 240px !important;
       }
       .print-page .intro-paragraph {
-        font-size: 9.3px !important;
-        line-height: 1.32 !important;
+        font-size: 10px !important;
+        line-height: 1.35 !important;
         margin-bottom: 6px !important;
       }
+      .print-page .intro-paragraph .purchase-val-box {
+        font-size: 10px !important;
+      }
       .print-page .clauses-block {
-        font-size: 8.6px !important;
-        line-height: 1.24 !important;
+        font-size: 10px !important;
+        line-height: 1.25 !important;
       }
       .print-page .clauses-block p {
-        margin-bottom: 2.5px !important;
+        margin-bottom: 2px !important;
       }
       .print-page .signature-space {
-        margin-bottom: 34px !important;
+        margin-bottom: 28px !important;
       }
       .print-page .signature-section-block {
-        margin-top: 6px !important;
+        margin-top: 4px !important;
         padding-top: 2px !important;
       }
       .print-page .footer-legal-block {
@@ -516,15 +519,15 @@
           </div>
 
           <!-- Parágrafo de Identificação e Declaração -->
-          <div class="intro-paragraph text-justify leading-relaxed mb-2 text-[9.3px] text-[#2d2d2d] pb-0.5">
+          <div class="intro-paragraph text-justify leading-relaxed mb-2 text-[10px] text-[#2d2d2d] pb-0.5">
             <span class="font-bold text-[#2d2d2d]">Amarterra - Mediação Imobiliária, Lda.</span>, com sede na <span class="font-medium text-[#2d2d2d]">Praça do Comércio, n.º 108, 4720-337 Ferreiros AMR</span>, titular da licença <span class="font-bold text-[#2d2d2d]">AMI 14229</span>, vem, para os devidos efeitos declarar que, como fiel depositário, recebeu de <strong id="docBuyerNames" class="text-[#2d2d2d] font-semibold underline decoration-[#2d2d2d]/40">__________________________________________</strong>, o valor de <strong id="docReserveValue" class="text-[#2d2d2d] font-semibold">2.500,00€ (Dois mil e quinhentos euros)</strong> mediante a entrega de <span id="docPaymentMethod">um cheque com o N.º</span> <strong id="docChequeNumber" class="text-[#2d2d2d] font-semibold">________________</strong>, sacado sobre o <strong id="docChequeBank" class="text-[#2d2d2d] font-semibold">____________________________</strong>, <span id="docFractionClause">como reserva do</span> artigo matricial <span id="docPropArticleType" class="font-semibold text-[#2d2d2d]">urbano</span> n.º <strong id="docPropArticleNum" class="text-[#2d2d2d] font-semibold">195</strong>, sito na <strong id="docPropAddress" class="text-[#2d2d2d] font-semibold">_________________________________</strong>, freguesia de <strong id="docPropParish" class="text-[#2d2d2d] font-semibold">_____________________</strong>, concelho de <strong id="docPropCouncil" class="text-[#2d2d2d] font-semibold">__________________</strong> de que é/são proprietário(s) <strong id="docSellerNames" class="text-[#2d2d2d] font-semibold underline decoration-[#2d2d2d]/40">____________________________________________________________________________</strong>.
-            <div class="mt-1 p-1 bg-slate-50 rounded border border-[#2d2d2d]/20 text-[9.2px]">
-              O valor acordado para a compra e venda é de: <strong id="docPurchaseValue" class="text-[#2d2d2d] font-bold text-[9.5px]">EUR _________________________________________________________________________</strong>.
+            <div class="purchase-val-box mt-1 p-1 bg-slate-50 rounded border border-[#2d2d2d]/20 text-[10px]">
+              O valor acordado para a compra e venda é de: <strong id="docPurchaseValue" class="text-[#2d2d2d] font-bold text-[10px]">EUR _________________________________________________________________________</strong>.
             </div>
           </div>
 
           <!-- Cláusulas Contratuais (1.ª a 13.ª) -->
-          <div class="clauses-block space-y-1 text-justify text-[8.6px] text-[#2d2d2d] leading-tight">
+          <div class="clauses-block space-y-1 text-justify text-[10px] text-[#2d2d2d] leading-tight">
             
             <p id="clausula1">
               <strong>1.ª</strong> Este cheque serve de pré-sinal do preço da compra do imóvel acima identificado, só sendo descontado após a assinatura do Contrato Promessa de Compra e Venda (CPCV) ou da escritura, caso não haja lugar a CPCV, e a sua entrega justifica-se pelo facto de o comprador pretender recorrer a financiamento bancário para a aquisição, não tendo, nesta data, garantida a obtenção desse financiamento.
@@ -574,7 +577,7 @@
               <strong>12.ª</strong> A mediadora supra identificada declara que o imóvel objeto da presente ficha de reserva, foi por si angariado através do Contrato de Mediação Imobiliária (CMI) celebrado em <strong id="docCmiDate">___/___/________</strong>.
             </p>
 
-            <p class="text-[8.2px] text-[#2d2d2d]">
+            <p class="text-[10px] text-[#2d2d2d]">
               <strong>13.ª</strong> O Proprietário e o Potencial Comprador poderão autorizar no sítio privacidade.era.pt que os seus dados sejam recolhidos, transmitidos ou processados informaticamente pela mediadora. Estes dados destinam-se a processamento administrativo, estatístico e de apresentação / divulgação de produtos e serviços comercializados.
             </p>
 
