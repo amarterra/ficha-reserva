@@ -60,6 +60,7 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
+    /* Regras estritas de impressão A4 em folha única */
     @media print {
       @page {
         size: A4 portrait;
@@ -79,9 +80,27 @@
         padding: 0 !important;
         width: 100% !important;
         height: auto !important;
-        min-height: 0 !important;
         display: block !important;
         overflow: visible !important;
+      }
+
+      /* OCULTAÇÃO ABSOLUTA DE TODO O FORMULÁRIO, CABEÇALHOS E BOTÕES */
+      header,
+      #leftFormCol,
+      #reservationForm,
+      .no-print,
+      .print\:hidden {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        position: absolute !important;
+        left: -99999px !important;
+        top: -99999px !important;
+        overflow: hidden !important;
       }
 
       main {
@@ -92,32 +111,7 @@
         display: block !important;
       }
 
-      /* Blindagem total contra a impressão do painel esquerdo, cabeçalho e avisos */
-      header,
-      #leftFormCol,
-      #reservationForm,
-      .no-print,
-      .print\:hidden,
-      .lg\:col-span-5,
-      [class*="no-print"],
-      [class*="print:hidden"] {
-        display: none !important;
-        visibility: hidden !important;
-        height: 0 !important;
-        width: 0 !important;
-        min-height: 0 !important;
-        max-height: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        border: none !important;
-        position: absolute !important;
-        left: -999999px !important;
-        top: -999999px !important;
-        overflow: hidden !important;
-      }
-
-      #rightPrintCol,
-      .lg\:col-span-7 {
+      #rightPrintCol {
         width: 100% !important;
         max-width: 100% !important;
         padding: 0 !important;
@@ -134,18 +128,18 @@
         width: 100% !important;
         max-width: 100% !important;
         height: auto !important;
-        min-height: 0 !important;
-        display: block !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
         color: #2d2d2d !important;
-        break-inside: auto !important;
-        page-break-inside: auto !important;
-        break-before: auto !important;
-        page-break-before: auto !important;
-        break-after: auto !important;
-        page-break-after: auto !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        page-break-before: avoid !important;
+        break-before: avoid !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
       }
 
-      /* Calibração milimétrica exclusiva para impressão */
       .print-page #headerFlexContainer {
         height: 112px !important;
       }
@@ -200,7 +194,7 @@
         <button type="button" onclick="clearForm()" class="px-3 py-2 text-xs md:text-sm font-medium text-brand-red bg-red-50 hover:bg-red-100 rounded-lg transition-colors" title="Limpar formulário">
           Limpar
         </button>
-        <button type="button" onclick="window.print()" class="px-4 py-2 text-xs md:text-sm font-semibold text-white bg-brand-red hover:bg-brand-burgundy rounded-lg shadow-sm transition-all flex items-center gap-2">
+        <button type="button" onclick="triggerPrint()" class="px-4 py-2 text-xs md:text-sm font-semibold text-white bg-brand-red hover:bg-brand-burgundy rounded-lg shadow-sm transition-all flex items-center gap-2">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
           <span>Imprimir / PDF</span>
         </button>
@@ -419,7 +413,6 @@
       </div>
     </div>
 
-    <!-- COLUNA DIREITA: Folha A4 para Impressão -->
     <div id="rightPrintCol" class="lg:col-span-7 flex flex-col items-center">
       
       <!-- Aviso visual -->
@@ -436,11 +429,11 @@
         
         <!-- PARTE SUPERIOR E CORPO DO DOCUMENTO -->
         <div>
-          <!-- Cabeçalho com Altura Calibrável -->
+          <!-- Cabeçalho -->
           <div class="relative mb-2">
             <div id="headerFlexContainer" class="flex items-stretch justify-between h-[128px] overflow-hidden transition-all duration-150">
               
-              <!-- Logo Oficial (Escala Automática pela Altura do Contentor) -->
+              <!-- Logo Oficial -->
               <div 
                 id="logoDropZone"
                 class="flex items-center justify-center pr-3 pl-0 bg-white flex-shrink-0 h-full relative" 
@@ -560,7 +553,7 @@
 
           </div>
 
-          <!-- Secção de Assinaturas (com espaçamento superior equivalente a duas linhas em branco e 90px de altura livre para assinatura) -->
+          <!-- Secção de Assinaturas -->
           <div class="mt-7 pt-2">
             <div class="grid grid-cols-3 gap-3 text-center text-[9.3px]">
               <div>
@@ -580,7 +573,7 @@
               </div>
             </div>
 
-            <!-- Linha das Vias e Data mantida imediatamente a seguir às assinaturas -->
+            <!-- Linha das Vias e Data -->
             <div class="flex items-center justify-between mt-2.5 text-[8px] text-[#2d2d2d]/80 italic">
               <span>Feito em triplicado com cópia do cheque e entregue uma via a cada um dos outorgantes.</span>
               <span id="docFooterCityDate">Amares, 2026</span>
@@ -588,7 +581,7 @@
           </div>
         </div>
 
-        <!-- RODAPÉ FIXO NO LIMITE INFERIOR DA PÁGINA A4 (Apenas Linha Vermelha e Aviso Legal) -->
+        <!-- RODAPÉ FIXO NO LIMITE INFERIOR DA PÁGINA A4 -->
         <div class="mt-auto pt-2 flex flex-col items-start justify-start text-left footer-legal-block">
           <div class="w-16 h-[1.5px] bg-[#c8102e] mb-0.5"></div>
           <p class="text-[7.2px] font-semibold text-[#2d2d2d] tracking-wider uppercase text-left">
@@ -696,6 +689,70 @@
       return resultadoFinal.charAt(0).toUpperCase() + resultadoFinal.slice(1);
     }
 
+    function syncPurchaseText() {
+      const val = parseFloat(document.getElementById('purchaseValueNum').value) || 0;
+      if (val > 0) {
+        const formatado = val.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        document.getElementById('purchaseValueText').value = `${formatado} € (${numeroPorExtensoPt(val)})`;
+
+        // Atualizar automaticamente o sinal do CPCV para 10%
+        const sinal10 = Math.round(val * 0.10);
+        document.getElementById('cpcvSignalNum').value = sinal10;
+        syncCpcvSignalText();
+      }
+      updateDocumentPreview();
+    }
+
+    function syncReserveText() {
+      const val = parseFloat(document.getElementById('reserveValueNum').value) || 0;
+      if (val > 0) {
+        const formatado = val.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        document.getElementById('reserveValueExtenso').value = `${formatado}€ (${numeroPorExtensoPt(val)})`;
+      }
+      updateDocumentPreview();
+    }
+
+    function syncCpcvSignalText() {
+      const val = parseFloat(document.getElementById('cpcvSignalNum').value) || 0;
+      if (val > 0) {
+        const formatado = val.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        document.getElementById('cpcvSignalText').value = `${formatado} € (${numeroPorExtensoPt(val)})`;
+      }
+      updateDocumentPreview();
+    }
+
+    function togglePaymentInputs() {
+      const method = document.getElementById('paymentMethod').value;
+      const refLabel = document.getElementById('paymentRefLabel');
+      if (refLabel) {
+        if (method === 'cheque') {
+          refLabel.textContent = 'N.º do Cheque';
+        } else if (method === 'transfer') {
+          refLabel.textContent = 'Ref. / ID Transferência';
+        } else {
+          refLabel.textContent = 'Identificação / Ref.';
+        }
+      }
+      updateDocumentPreview();
+    }
+
+    function handleChequeUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.getElementById('chequeImagePreview');
+          const placeholder = document.getElementById('chequePlaceholder');
+          if (img && placeholder) {
+            img.src = e.target.result;
+            img.classList.remove('hidden');
+            placeholder.classList.add('hidden');
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
     function onLogoLoaded() {
       const img = document.getElementById('docLogoImg');
       const fallback = document.getElementById('logoFallbackPlaceholder');
@@ -710,89 +767,90 @@
       if (fallback) fallback.classList.remove('hidden');
     }
 
-    function triggerLogoSelect() {
-      document.getElementById('logoFileInput').click();
-    }
+    // Atualização em tempo real de toda a folha
+    function updateDocumentPreview() {
+      // Data da Reserva
+      const resDateVal = document.getElementById('reservationDate').value;
+      const formattedResDate = formatDatePt(resDateVal);
+      document.getElementById('docHeaderDate').textContent = formattedResDate !== '___/___/________' ? formattedResDate : '--/--/----';
 
-    function handleLogoUpload(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const imgData = e.target.result;
-          const img = document.getElementById('docLogoImg');
-          const fallback = document.getElementById('logoFallbackPlaceholder');
-          
-          img.src = imgData;
-          img.classList.remove('hidden');
-          if (fallback) fallback.classList.add('hidden');
-
-          try {
-            localStorage.setItem('era_official_logo', imgData);
-          } catch (err) {
-            console.warn('Não foi possível guardar na cache local:', err);
-          }
-        };
-        reader.readAsDataURL(file);
+      // Intervenientes
+      const buyerName = document.getElementById('buyerNames').value.trim();
+      const buyerNif = document.getElementById('buyerNifs').value.trim();
+      let buyerDisplay = buyerName;
+      if (buyerNif) {
+        buyerDisplay = buyerName ? `${buyerName} (NIF: ${buyerNif})` : `NIF: ${buyerNif}`;
       }
-    }
+      document.getElementById('docBuyerNames').textContent = buyerDisplay || '__________________________________________';
 
-    function initLogoDragAndDrop() {
-      const dropZone = document.getElementById('logoDropZone');
-      if (!dropZone) return;
+      const sellerName = document.getElementById('sellerNames').value.trim();
+      const sellerNif = document.getElementById('sellerNifs').value.trim();
+      let sellerDisplay = sellerName;
+      if (sellerNif) {
+        sellerDisplay = sellerName ? `${sellerName} (NIF: ${sellerNif})` : `NIF: ${sellerNif}`;
+      }
+      document.getElementById('docSellerNames').textContent = sellerDisplay || '____________________________________________________________________________';
 
-      ['dragenter', 'dragover'].forEach(eventName => {
-        dropZone.addEventListener(eventName, (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          dropZone.classList.add('ring-2', 'ring-brand-red');
-        }, false);
-      });
+      // Valores
+      document.getElementById('docReserveValue').textContent = document.getElementById('reserveValueExtenso').value || '2.500,00€ (Dois mil e quinhentos euros)';
+      document.getElementById('docPurchaseValue').textContent = document.getElementById('purchaseValueText').value || 'EUR _________________________________________________________________________';
 
-      ['dragleave', 'drop'].forEach(eventName => {
-        dropZone.addEventListener(eventName, (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          dropZone.classList.remove('ring-2', 'ring-brand-red');
-        }, false);
-      });
+      // Pagamento
+      const method = document.getElementById('paymentMethod').value;
+      const methodSpan = document.getElementById('docPaymentMethod');
+      if (method === 'cheque') {
+        methodSpan.textContent = 'um cheque com o N.º';
+      } else if (method === 'transfer') {
+        methodSpan.textContent = 'uma transferência bancária com a Ref.';
+      } else {
+        methodSpan.textContent = 'meio de pagamento identificado sob a Ref.';
+      }
 
-      dropZone.addEventListener('drop', (e) => {
-        const dt = e.dataTransfer;
-        const files = dt.files;
-        if (files && files.length > 0) {
-          handleLogoUpload({ target: { files: files } });
+      document.getElementById('docChequeNumber').textContent = document.getElementById('chequeNumber').value || '________________';
+      document.getElementById('docChequeBank').textContent = document.getElementById('chequeBank').value || '____________________________';
+
+      // Identificação Matricial
+      const fractionVal = document.getElementById('propFraction').value.trim();
+      const fractionClause = document.getElementById('docFractionClause');
+      if (!fractionVal || fractionVal.toUpperCase() === 'N/A' || fractionVal.toLowerCase() === 'não aplicável') {
+        fractionClause.textContent = 'como reserva do';
+      } else {
+        fractionClause.textContent = `como reserva da fração ${fractionVal} do`;
+      }
+
+      document.getElementById('docPropArticleType').textContent = document.getElementById('propArticleType').value;
+      document.getElementById('docPropArticleNum').textContent = document.getElementById('propArticleNum').value || '____';
+      document.getElementById('docPropAddress').textContent = document.getElementById('propAddress').value || '_________________________________';
+      document.getElementById('docPropParish').textContent = document.getElementById('propParish').value || '_____________________';
+      document.getElementById('docPropCouncil').textContent = document.getElementById('propCouncil').value || '__________________';
+
+      // Prazos e CMI
+      document.getElementById('docCpcvDate').textContent = formatDatePt(document.getElementById('cpcvDateLimit').value);
+      document.getElementById('docCpcvSignal').textContent = document.getElementById('cpcvSignalText').value || '___________________________';
+      document.getElementById('docDeedDays').textContent = document.getElementById('deedDaysLimit').value || '90';
+      document.getElementById('docCmiDate').textContent = formatDatePt(document.getElementById('cmiDate').value);
+
+      // Cidade e Data no Rodapé
+      const council = document.getElementById('propCouncil').value.trim() || 'Amares';
+      document.getElementById('docFooterCityDate').textContent = `${council}, ${formattedResDate !== '___/___/________' ? formattedResDate : new Date().getFullYear()}`;
+
+      // Cláusulas de Financiamento
+      const hasFinancing = document.getElementById('hasFinancing').checked;
+      const cl1 = document.getElementById('clausula1');
+      const cl4 = document.getElementById('clausula4');
+      if (cl1 && cl4) {
+        if (hasFinancing) {
+          cl1.style.display = '';
+          cl4.style.display = '';
+        } else {
+          cl1.style.display = 'none';
+          cl4.style.display = 'none';
         }
-      }, false);
+      }
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      const savedLogo = localStorage.getItem('era_official_logo');
-      if (savedLogo) {
-        const img = document.getElementById('docLogoImg');
-        const fallback = document.getElementById('logoFallbackPlaceholder');
-        img.src = savedLogo;
-        img.classList.remove('hidden');
-        if (fallback) fallback.classList.add('hidden');
-      }
-
-      initLogoDragAndDrop();
-
-      // Blindagem via eventos do browser para suprimir a coluna esquerda antes da impressão
-      window.addEventListener('beforeprint', () => {
-        const leftCol = document.getElementById('leftFormCol');
-        if (leftCol) leftCol.style.setProperty('display', 'none', 'important');
-        const header = document.querySelector('header');
-        if (header) header.style.setProperty('display', 'none', 'important');
-      });
-
-      window.addEventListener('afterprint', () => {
-        const leftCol = document.getElementById('leftFormCol');
-        if (leftCol) leftCol.style.removeProperty('display');
-        const header = document.querySelector('header');
-        if (header) header.style.removeProperty('display');
-      });
-
+    // Carregamento de dados de exemplo
+    function loadSampleData() {
       const today = new Date().toISOString().split('T')[0];
       document.getElementById('reservationDate').value = today;
       document.getElementById('cmiDate').value = today;
@@ -801,27 +859,27 @@
       cpcvDate.setDate(cpcvDate.getDate() + 30);
       document.getElementById('cpcvDateLimit').value = cpcvDate.toISOString().split('T')[0];
 
-      document.getElementById('propFraction').value = 'N/A';
-      document.getElementById('propArticleType').value = 'urbano';
-      document.getElementById('propArticleNum').value = '195';
-      document.getElementById('propAddress').value = 'Rua das Flores, Lote 12';
-      document.getElementById('propParish').value = 'Ferreiros';
-      document.getElementById('propCouncil').value = 'Amares';
-
       document.getElementById('buyerNames').value = 'João Pedro Santos da Silva';
       document.getElementById('buyerNifs').value = '234567890';
       document.getElementById('sellerNames').value = 'Maria Helena Ferreira Ramos';
       document.getElementById('sellerNifs').value = '123456789';
 
-      document.getElementById('purchaseValueNum').value = 195000;
-      document.getElementById('purchaseValueText').value = '195.000,00 € (Cento e noventa e cinco mil euros)';
+      document.getElementById('propArticleType').value = 'urbano';
+      document.getElementById('propArticleNum').value = '195';
+      document.getElementById('propFraction').value = 'N/A';
+      document.getElementById('propAddress').value = 'Rua das Flores, Lote 12';
+      document.getElementById('propParish').value = 'Ferreiros';
+      document.getElementById('propCouncil').value = 'Amares';
+
+      document.getElementById('purchaseValueNum').value = 235000;
+      document.getElementById('purchaseValueText').value = '235.000,00 € (Duzentos e trinta e cinco mil euros)';
       document.getElementById('reserveValueNum').value = 2500;
       document.getElementById('reserveValueExtenso').value = '2.500,00€ (Dois mil e quinhentos euros)';
       document.getElementById('paymentMethod').value = 'cheque';
-      document.getElementById('chequeNumber').value = 'CHQ-88392019';
-      document.getElementById('chequeBank').value = 'Millennium BCP';
-      document.getElementById('cpcvSignalNum').value = 19500;
-      document.getElementById('cpcvSignalText').value = '19.500,00 € (Dezanove mil e quinhentos euros)';
+      document.getElementById('chequeNumber').value = 'CHQ-98124501';
+      document.getElementById('chequeBank').value = 'Banco Santander Totta';
+      document.getElementById('cpcvSignalNum').value = 23500;
+      document.getElementById('cpcvSignalText').value = '23.500,00 € (Vinte e três mil e quinhentos euros)';
       document.getElementById('deedDaysLimit').value = 90;
       document.getElementById('hasFinancing').checked = true;
 
@@ -854,6 +912,33 @@
 
       updateDocumentPreview();
     }
+
+    // Blindagem de impressão: garante remoção física da coluna e cabeçalho
+    function prepareForPrint() {
+      const leftCol = document.getElementById('leftFormCol');
+      const header = document.querySelector('header');
+      if (leftCol) leftCol.style.setProperty('display', 'none', 'important');
+      if (header) header.style.setProperty('display', 'none', 'important');
+    }
+
+    function restoreAfterPrint() {
+      const leftCol = document.getElementById('leftFormCol');
+      const header = document.querySelector('header');
+      if (leftCol) leftCol.style.removeProperty('display');
+      if (header) header.style.removeProperty('display');
+    }
+
+    function triggerPrint() {
+      prepareForPrint();
+      window.print();
+    }
+
+    window.addEventListener('beforeprint', prepareForPrint);
+    window.addEventListener('afterprint', restoreAfterPrint);
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadSampleData();
+    });
   </script>
 </body>
 </html>
